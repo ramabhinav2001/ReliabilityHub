@@ -1,0 +1,26 @@
+{
+  "name": "reliabilityhub",
+  "version": "1.0.0",
+  "description": "Service health monitoring and anomaly detection platform",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "node --watch src/index.js",
+    "test": "node test/run-tests.js"
+  },
+  "keywords": [
+    "prometheus",
+    "monitoring",
+    "reliability",
+    "alerting"
+  ],
+  "author": "",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.17.0"
+  },
+  "dependencies": {
+    "express": "^4.21.2",
+    "prom-client": "^15.1.3"
+  }
+}
