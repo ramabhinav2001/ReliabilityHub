@@ -1,0 +1,23 @@
+global:
+  resolve_timeout: 5m
+
+route:
+  group_by: ["alertname", "service", "severity"]
+  group_wait: 30s
+  group_interval: 2m
+  repeat_interval: 30m
+  receiver: "slack-webhook"
+  routes:
+    - matchers:
+        - severity="critical"
+      receiver: "slack-webhook"
+      continue: true
+    - matchers:
+        - severity="warning"
+      receiver: "slack-webhook"
+
+receivers:
+  - name: "slack-webhook"
+    webhook_configs:
+      - url: "http://host.docker.internal:3100/alerts"
+        send_resolved: true

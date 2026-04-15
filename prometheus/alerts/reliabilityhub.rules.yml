@@ -1,0 +1,42 @@
+groups:
+  - name: reliabilityhub.core.alerts
+    rules:
+      - alert: ReliabilityHubLowAvailability
+        expr: reliabilityhub_service_availability_percent < 99.5
+        for: 2m
+        labels:
+          severity: critical
+          service: reliabilityhub
+        annotations:
+          summary: "ReliabilityHub availability dropped below SLO"
+          description: "Availability is {{ $value }}% for the monitored service."
+
+      - alert: ReliabilityHubHighErrorRate
+        expr: reliabilityhub_service_error_rate_percent > 2
+        for: 2m
+        labels:
+          severity: warning
+          service: reliabilityhub
+        annotations:
+          summary: "ReliabilityHub error rate breach"
+          description: "Error rate is {{ $value }}% and exceeded threshold."
+
+      - alert: ReliabilityHubHighLatency
+        expr: reliabilityhub_service_latency_p95_ms > 450
+        for: 2m
+        labels:
+          severity: warning
+          service: reliabilityhub
+        annotations:
+          summary: "ReliabilityHub p95 latency is high"
+          description: "p95 latency is {{ $value }} ms."
+
+      - alert: ReliabilityHubAnomalyDetected
+        expr: reliabilityhub_service_anomaly_score > 4
+        for: 1m
+        labels:
+          severity: critical
+          service: reliabilityhub
+        annotations:
+          summary: "Anomaly score indicates unhealthy behavior"
+          description: "Anomaly score is {{ $value }}."
