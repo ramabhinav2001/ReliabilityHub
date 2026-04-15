@@ -5,6 +5,7 @@
   "main": "src/index.js",
   "scripts": {
     "start": "node src/index.js",
+    "start:alerting": "node src/alerting/server.js",
     "dev": "node --watch src/index.js",
     "test": "node test/run-tests.js"
   },
@@ -20,6 +21,7 @@
     "node": ">=18.17.0"
   },
   "dependencies": {
+    "@aws-sdk/client-cloudwatch": "^3.740.0",
     "express": "^4.21.2",
     "prom-client": "^15.1.3"
   }

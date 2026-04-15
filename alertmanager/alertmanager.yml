@@ -19,5 +19,5 @@ route:
 receivers:
   - name: "slack-webhook"
     webhook_configs:
-      - url: "http://host.docker.internal:3100/alerts"
+      - url: "http://alert-router:3100/alerts"
         send_resolved: true

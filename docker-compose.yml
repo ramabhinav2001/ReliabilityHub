@@ -44,6 +44,26 @@ services:
       - ./alertmanager/alertmanager.yml:/etc/alertmanager/alertmanager.yml:ro
     ports:
       - "9093:9093"
+    depends_on:
+      - alert-router
+    networks:
+      - reliabilityhub
+
+  alert-router:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: reliabilityhub-alert-router
+    command: npm run start:alerting
+    environment:
+      - ALERT_ROUTER_PORT=3100
+      - AWS_REGION=${AWS_REGION:-us-east-1}
+      - CLOUDWATCH_NAMESPACE=${CLOUDWATCH_NAMESPACE:-ReliabilityHub/Alerts}
+      - SLACK_WEBHOOK_URL=${SLACK_WEBHOOK_URL:-}
+      - SLACK_CHANNEL_CRITICAL=${SLACK_CHANNEL_CRITICAL:-#reliability-critical}
+      - SLACK_CHANNEL_WARNING=${SLACK_CHANNEL_WARNING:-#reliability-warning}
+    ports:
+      - "3100:3100"
     networks:
       - reliabilityhub
 

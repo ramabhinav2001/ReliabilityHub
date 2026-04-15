@@ -29,6 +29,7 @@ Services:
 - App: `http://localhost:3000`
 - Prometheus: `http://localhost:9090`
 - Alertmanager: `http://localhost:9093`
+- Alert Router: `http://localhost:3100`
 - Grafana: `http://localhost:3001` (admin/admin)
 
 Preconfigured assets:
@@ -36,3 +37,15 @@ Preconfigured assets:
 - Prometheus scrape config and alert rules in `prometheus/`
 - Alertmanager routing in `alertmanager/alertmanager.yml`
 - Grafana datasource and dashboard provisioning in `grafana/provisioning/`
+
+## Automated Alert Routing
+
+Alert flow:
+
+1. Prometheus evaluates latency, availability, error-rate, and anomaly rules.
+2. Alertmanager forwards alert groups to the ReliabilityHub alert router (`/alerts`).
+3. Alert router publishes alerts to:
+- Slack incoming webhook (severity-based channel mapping)
+- AWS CloudWatch custom metrics (`AlertCount`, `DetectionLatencySeconds`)
+
+Configure integration values with `.env` (see `.env.example`).
