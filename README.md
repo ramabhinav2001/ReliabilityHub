@@ -1,6 +1,7 @@
 # ReliabilityHub
 
 ReliabilityHub is a service health monitoring and alerting platform for tracking latency, availability, and error rates in real time.
+The stack is designed to support high-throughput telemetry pipelines (1M+ metrics/day) with proactive incident routing.
 
 ## Core Service
 
@@ -49,3 +50,9 @@ Alert flow:
 - AWS CloudWatch custom metrics (`AlertCount`, `DetectionLatencySeconds`)
 
 Configure integration values with `.env` (see `.env.example`).
+
+## Kubernetes + AWS
+
+- Kubernetes manifests are available under `k8s/` (app, Prometheus, Alertmanager, Grafana, HPA).
+- AWS deployment/automation scripts are available under `scripts/aws/`.
+- Full deployment runbook: `docs/deployment-aws.md`

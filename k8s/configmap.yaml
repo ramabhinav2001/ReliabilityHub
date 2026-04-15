@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: reliabilityhub-config
+  namespace: reliabilityhub
+data:
+  PORT: "3000"
+  CHECK_INTERVAL_MS: "10000"
+  CHECK_TIMEOUT_MS: "3000"
+  AVAILABILITY_SLO: "99.9"
+  ERROR_RATE_THRESHOLD: "1.5"
+  LATENCY_THRESHOLD_MS: "350"
+  DEPENDENCY_TARGETS: "https://httpstat.us/200,https://httpstat.us/503"
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: alert-router-config
+  namespace: reliabilityhub
+data:
+  ALERT_ROUTER_PORT: "3100"
+  AWS_REGION: "us-east-1"
+  CLOUDWATCH_NAMESPACE: "ReliabilityHub/Alerts"
+  SLACK_CHANNEL_CRITICAL: "#reliability-critical"
+  SLACK_CHANNEL_WARNING: "#reliability-warning"

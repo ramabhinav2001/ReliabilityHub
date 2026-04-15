@@ -1,0 +1,70 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: reliabilityhub-grafana-datasource
+  namespace: reliabilityhub
+data:
+  datasource.yml: |
+    apiVersion: 1
+    datasources:
+      - name: Prometheus
+        uid: reliabilityhub-prometheus
+        type: prometheus
+        access: proxy
+        url: http://reliabilityhub-prometheus:9090
+        isDefault: true
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: reliabilityhub-grafana
+  namespace: reliabilityhub
+  labels:
+    app: reliabilityhub-grafana
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: reliabilityhub-grafana
+  template:
+    metadata:
+      labels:
+        app: reliabilityhub-grafana
+    spec:
+      containers:
+        - name: grafana
+          image: grafana/grafana:11.2.2
+          env:
+            - name: GF_SECURITY_ADMIN_USER
+              value: admin
+            - name: GF_SECURITY_ADMIN_PASSWORD
+              value: admin
+          ports:
+            - containerPort: 3000
+          volumeMounts:
+            - name: datasource
+              mountPath: /etc/grafana/provisioning/datasources
+          resources:
+            requests:
+              cpu: "150m"
+              memory: "256Mi"
+            limits:
+              cpu: "500m"
+              memory: "512Mi"
+      volumes:
+        - name: datasource
+          configMap:
+            name: reliabilityhub-grafana-datasource
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: reliabilityhub-grafana
+  namespace: reliabilityhub
+spec:
+  selector:
+    app: reliabilityhub-grafana
+  ports:
+    - name: http
+      port: 3000
+      targetPort: 3000
