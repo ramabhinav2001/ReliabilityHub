@@ -56,3 +56,10 @@ Configure integration values with `.env` (see `.env.example`).
 - Kubernetes manifests are available under `k8s/` (app, Prometheus, Alertmanager, Grafana, HPA).
 - AWS deployment/automation scripts are available under `scripts/aws/`.
 - Full deployment runbook: `docs/deployment-aws.md`
+
+## Benchmarking and Validation
+
+- Metric ingestion estimator (1M+ metrics/day sizing): `npm run benchmark:volume`
+- Anomaly detector benchmark (F1/accuracy comparison): `npm run benchmark:anomaly`
+- k6 load scenario for latency/error spike simulation: `load/k6-load.js`
+- Validation playbook: `docs/performance-validation.md`

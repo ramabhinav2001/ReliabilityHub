@@ -7,7 +7,9 @@
     "start": "node src/index.js",
     "start:alerting": "node src/alerting/server.js",
     "dev": "node --watch src/index.js",
-    "test": "node test/run-tests.js"
+    "test": "node test/run-tests.js",
+    "benchmark:anomaly": "node scripts/benchmark/anomaly-evaluation.js",
+    "benchmark:volume": "node scripts/benchmark/estimate-metric-volume.js"
   },
   "keywords": [
     "prometheus",
